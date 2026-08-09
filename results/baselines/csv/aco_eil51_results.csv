@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+AntColony,../DATASETS/eil51.tsp,eil51,51,438.0,452.75,6.275946143809713,20.669076108932494,20,300

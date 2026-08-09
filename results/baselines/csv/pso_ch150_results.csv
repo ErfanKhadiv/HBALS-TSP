@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+PSO,../DATASETS/ch150.tsp,ch150,150,7309.0,7309.0,0.0,0.6883501172065735,20,300

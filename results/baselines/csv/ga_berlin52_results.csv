@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+GeneticAlgorithm,../DATASETS/berlin52.tsp,berlin52,52,12368.0,14009.0,908.4988717659477,0.33389743566513064,20,300

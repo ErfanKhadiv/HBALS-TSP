@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+PSO,../DATASETS/berlin52.tsp,berlin52,52,8801.0,8970.65,38.93876603078223,0.339020836353302,20,300
