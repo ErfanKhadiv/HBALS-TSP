@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,preset,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+HBALS,../DATASETS/berlin52.tsp,berlin52,fast,52,7542.0,7543.0,2.0,5.30529910326004,20,300

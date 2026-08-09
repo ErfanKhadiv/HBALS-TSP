@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,preset,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+HBALS,../DATASETS/ch150.tsp,ch150,fast,150,6570.0,6627.95,40.126643268531694,83.68205295801162,20,300

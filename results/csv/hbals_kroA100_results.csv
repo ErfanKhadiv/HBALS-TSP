@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,preset,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+HBALS,../DATASETS/kroA100.tsp,kroA100,fast,100,21296.0,21388.6,79.05845938291488,39.1724769949913,20,300

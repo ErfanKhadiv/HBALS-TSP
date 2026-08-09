@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,preset,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+HBALS,../DATASETS/rat195.tsp,rat195,fast,195,2349.0,2375.3,14.15662389130968,161.51161683797835,20,300

@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,preset,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+HBALS,../DATASETS/eil51.tsp,eil51,fast,51,426.0,427.85,1.681517172080024,4.618770170211792,20,300

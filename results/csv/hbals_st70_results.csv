@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,preset,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+HBALS,../DATASETS/st70.tsp,st70,fast,70,675.0,679.4,2.817800560721074,11.905427718162537,20,300
