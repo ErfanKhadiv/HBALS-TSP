@@ -230,6 +230,17 @@ The repository also contains the complete experimental results and generated plo
 
 ---
 
+## 📚 Citation
+
+If you use this implementation or build upon this project, please cite:
+
+> Khadiv, Erfan. (2026). *HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem*. GitHub.  
+> https://github.com/ErfanKhadiv/HBALS-TSP
+
+For the associated academic report, see [`docs/`](docs/).
+
+---
+
 ## 📜 License
 
 This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
