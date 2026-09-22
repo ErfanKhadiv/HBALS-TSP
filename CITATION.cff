@@ -5,7 +5,6 @@ type: software
 authors:
   - family-names: "Khadiv"
     given-names: "Erfan"
-    orcid: ""
 keywords:
   - "Traveling Salesman Problem"
   - "Bees Algorithm"
