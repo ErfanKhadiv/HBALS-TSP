@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem"
+message: "If you use this software or build upon this work, please cite it as follows."
+type: software
+authors:
+  - family-names: "Khadiv"
+    given-names: "Erfan"
+    orcid: ""
+keywords:
+  - "Traveling Salesman Problem"
+  - "Bees Algorithm"
+  - "Metaheuristic Optimization"
+  - "Local Search"
+  - "2-opt"
+  - "3-opt"
+  - "Combinatorial Optimization"
+repository-code: "https://github.com/ErfanKhadiv/HBALS-TSP"
+license: "MIT"
+version: "1.0.0"
