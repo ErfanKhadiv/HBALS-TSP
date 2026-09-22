@@ -1,57 +1,73 @@
 # HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem
 
-A hybrid metaheuristic that combines the **Bees Algorithm (BA)** with adaptive **2-opt/3-opt local search** to solve the Traveling Salesman Problem (TSP).
+A hybrid metaheuristic that combines the **Bees Algorithm (BA)** with adaptive **2-opt / 3-opt local search** to solve the **Traveling Salesman Problem (TSP)**.
 
 The project investigates whether adaptive local search can improve solution quality and convergence while preserving the exploration capability of a population-based metaheuristic.
 
-> 🎓 **Academic Project**
-> Bachelor's final project for the **Computer Project** course at Islamic Azad University, Ardabil (2026), supervised by **Dr. Masoud Bakravi**.
+> 🎓 **Bachelor's Final Project**
+> Computer Project course, Islamic Azad University, Ardabil — 2026
+> **Supervisor:** Dr. Masoud Bakravi
 
 ---
 
 ## 🔬 Research Question
 
-Can adaptive local search improve the Bees Algorithm for the TSP by refining promising solutions while maintaining sufficient population diversity for exploration?
+Can adaptive local search improve the solution quality and convergence behavior of the Bees Algorithm for the Traveling Salesman Problem while maintaining sufficient population diversity?
 
 ---
 
-## 💡 Approach
+## 💡 Motivation
 
-HBALS combines the global exploration of the Bees Algorithm with targeted local improvement:
+The Traveling Salesman Problem is a classic combinatorial optimization problem for which exact methods become increasingly difficult to apply as the problem size grows.
+
+Population-based metaheuristics provide a practical alternative, but the standard Bees Algorithm can experience slow convergence or become trapped in local optima.
+
+HBALS addresses this by applying local search **adaptively to promising regions of the population**, combining global exploration with targeted local improvement.
+
+---
+
+## 🧠 Method
+
+HBALS combines the Bees Algorithm with adaptive local search through the following process:
 
 1. **Population initialization**
-   A mixture of Nearest-Neighbor and random tours is used to balance initial solution quality and diversity.
+   Generate an initial population using a mixture of Nearest-Neighbor and random tours to balance initial solution quality and diversity.
 
-2. **Population evaluation**
-   Candidate tours are evaluated and ranked according to their total length.
+2. **Evaluation and ranking**
+   Evaluate candidate tours according to their total route length and rank the population.
 
 3. **Elite-site search**
-   Intensive 2-opt local search, with occasional 3-opt moves, is applied to the best candidate solutions.
+   Apply intensive 2-opt local search, with occasional 3-opt moves, to the best candidate solutions.
 
 4. **Selected-site search**
-   Lighter local search is applied to additional promising solutions.
+   Apply lighter local search to additional promising solutions.
 
 5. **Scout bees**
-   New candidate tours are introduced to maintain exploration and reduce premature convergence.
+   Introduce new candidate tours to preserve exploration and reduce premature convergence.
 
 6. **Adaptive neighborhood**
-   The search radius is adjusted according to improvement or stagnation.
+   Adjust the search neighborhood according to improvement or stagnation.
 
 7. **Termination**
-   The process continues until the maximum number of iterations is reached or the search stagnates for a specified number of generations.
+   Continue until the maximum number of iterations is reached or the search stagnates for a specified number of generations.
 
 ---
 
 ## 📊 Experimental Evaluation
 
-HBALS was evaluated on six standard **TSPLIB** benchmark instances.
+HBALS was evaluated on six standard TSPLIB benchmark instances.
 
 Each experiment used:
 
 * **20 independent runs**
 * **300 iterations**
-* `fast` configuration
-* Best, mean, standard deviation, and execution time recorded
+* `fast` preset
+* Best solution
+* Mean solution quality
+* Standard deviation
+* Execution time
+
+### HBALS Results
 
 | Dataset    | Cities |  Best |     Mean | Std. Dev. | Time (s) |
 | ---------- | -----: | ----: | -------: | --------: | -------: |
@@ -71,44 +87,51 @@ The implementation includes four baseline algorithms:
 * **Genetic Algorithm (GA)**
 * **Particle Swarm Optimization (PSO)**
 
-Across the six tested benchmark instances, HBALS obtained the lowest tour length among the implemented baselines in the recorded experiments. The complete comparison results are available in [`results/csv/`](results/csv/).
+In the experiments conducted for this project, **HBALS obtained the lowest tour length among the implemented baselines on all six tested instances**.
+
+The complete comparison results are available in [`results/`](results/).
 
 ---
 
 ## 📈 Convergence
 
-Convergence curves are provided for HBALS and all baseline algorithms.
+The repository includes convergence plots for HBALS and all baseline algorithms.
 
-See [`results/plots/`](results/plots/) for the complete set of generated plots.
+The experiments show that HBALS reaches near-final solution quality relatively early in the optimization process on the tested instances.
+
+See [`results/plots/`](results/plots/) for the generated convergence curves.
 
 ---
 
-## 🧠 Algorithm Components
+## ⚙️ Compared Algorithms
 
-### Bees Algorithm
+### HBALS
 
-The population-based search is organized around:
+Hybrid Bees Algorithm with adaptive local search.
 
-* Elite sites
-* Selected sites
-* Recruited bees
-* Scout bees
+### BA
 
-### Local Search
+Basic Bees Algorithm without the HBALS local-search component.
 
-HBALS incorporates:
+### ACO
 
-* **2-opt** for systematic route improvement
-* A lightweight **3-opt-inspired segment reversal operation**
-* Adaptive neighborhood control
+Ant Colony Optimization using an Ant System approach.
 
-The local-search intensity is concentrated around promising solutions rather than applied uniformly to the entire population.
+### GA
+
+Genetic Algorithm using ordered crossover and permutation-based mutation.
+
+### PSO
+
+Particle Swarm Optimization adapted for permutation-based TSP solutions.
+
+These baseline implementations provide a direct comparison against different population-based and swarm-inspired optimization approaches.
 
 ---
 
 ## 🧪 Reproducibility
 
-All six benchmark instances used in the experiments are included in the repository, so the experiments can be reproduced without downloading external datasets.
+All six benchmark instances used in the experiments are included in the repository, so the reported experiments can be reproduced without downloading external datasets.
 
 ### Installation
 
@@ -182,8 +205,9 @@ HBALS-TSP/
 ├── docs/
 │   └── HBALS_paper.docx
 │
-├── requirements.txt
+├── CITATION.cff
 ├── LICENSE
+├── requirements.txt
 └── README.md
 ```
 
@@ -191,31 +215,32 @@ HBALS-TSP/
 
 ## ⚠️ Limitations
 
-* The implemented 3-opt operation is a lightweight randomized segment-reversal search rather than a full 3-opt neighborhood.
-* Performance is sensitive to parameter settings; automated parameter optimization was not performed.
-* Experiments were conducted on instances up to 195 cities.
-* Scalability to substantially larger instances has not been evaluated.
+* The implemented **3-opt operator is a lightweight randomized segment-reversal search**, rather than a full 3-opt neighborhood.
+* Performance is sensitive to parameter settings, and automated parameter optimization was not performed.
+* The experiments cover instances up to **195 cities**; behavior on substantially larger instances has not been evaluated.
+* Runtime increases as local-search effort and problem size increase.
+
+These limitations are documented explicitly to distinguish the current implementation from possible future extensions.
 
 ---
 
 ## 🚀 Future Work
 
-Potential extensions include:
+Possible directions for extending the project include:
 
-* Automated parameter self-tuning
-* Parallel or GPU-accelerated local search
+* Adaptive parameter self-tuning
 * More extensive TSPLIB benchmarking
 * Full 3-opt neighborhood exploration
-* Hybridization with Lin-Kernighan search
-* Evaluation on larger TSP instances
+* Parallel or GPU-accelerated local search
+* Hybridization with stronger local-search methods such as Lin-Kernighan
 
 ---
 
-## 📄 Project Documentation
+## 📄 Project Report
 
-The original project paper is available in [`docs/`](docs/).
+The written report accompanying this Bachelor's final project is available in [`docs/`](docs/).
 
-The repository also contains the complete experimental results and generated plots.
+It contains the project background, algorithm design, related work, methodology, experimental evaluation, and discussion.
 
 ---
 
@@ -234,13 +259,13 @@ The repository also contains the complete experimental results and generated plo
 
 If you use this implementation or build upon this project, please cite:
 
-> Khadiv, Erfan. (2026). *HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem*. GitHub.  
+> Khadiv, Erfan. (2026). *HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem*. GitHub.
 > https://github.com/ErfanKhadiv/HBALS-TSP
 
-For the associated academic report, see [`docs/`](docs/).
+Citation metadata is also provided in [`CITATION.cff`](CITATION.cff).
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
+This project is licensed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
