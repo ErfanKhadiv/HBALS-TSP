@@ -1,121 +1,235 @@
-# HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the TSP
+# HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem
 
-A hybrid metaheuristic combining the **Bees Algorithm (BA)** with **adaptive 2-opt / 3-opt local search** to solve the Traveling Salesman Problem (TSP). Benchmarked against BA, ACO, GA, and PSO on six TSPLIB instances.
+A hybrid metaheuristic that combines the **Bees Algorithm (BA)** with adaptive **2-opt/3-opt local search** to solve the Traveling Salesman Problem (TSP).
 
-> Originally developed as a final project for the "Computer Project" course at Islamic Azad University, Ardabil (2026). This repo contains the cleaned-up implementation, full experimental results, and the original paper.
+The project investigates whether adaptive local search can improve solution quality and convergence while preserving the exploration capability of a population-based metaheuristic.
 
-## Why
+> 🎓 **Academic Project**
+> Bachelor's final project for the **Computer Project** course at Islamic Azad University, Ardabil (2026), supervised by **Dr. Masoud Bakravi**.
 
-TSP is NP-Hard, so exact methods don't scale. Metaheuristics like the Bees Algorithm trade optimality guarantees for tractable runtime — but the standard BA converges slowly and stagnates in local optima. HBALS addresses this by applying local search (2-opt/3-opt) **adaptively**, only on the most promising regions, to speed up convergence without sacrificing population diversity.
+---
 
-## Results
+## 🔬 Research Question
 
-Tested on TSPLIB instances (20 independent runs, 300 iterations each, `fast` preset):
+Can adaptive local search improve the Bees Algorithm for the TSP by refining promising solutions while maintaining sufficient population diversity for exploration?
 
-| Dataset | n | Best | Mean | Std | Time (s) |
-|---|---|---|---|---|---|
-| eil51 | 51 | 426 | 427.85 | 1.68 | 4.62 |
-| berlin52 | 52 | 7542 | 7543.0 | 2.00 | 5.31 |
-| st70 | 70 | 675 | 679.4 | 2.82 | 11.91 |
-| kroA100 | 100 | 21296 | 21388.6 | 79.06 | 39.17 |
-| ch150 | 150 | 6570 | 6627.95 | 40.13 | 83.68 |
-| rat195 | 195 | 2349 | 2375.3 | 14.16 | 161.51 |
+---
 
-### vs. BA, ACO, GA, PSO
+## 💡 Approach
 
-HBALS produced the best solution quality on **every single dataset** tested:
+HBALS combines the global exploration of the Bees Algorithm with targeted local improvement:
 
-| Dataset | Algorithm | Best | Mean | Std | Time (s) |
-|---|---|---|---|---|---|
-| eil51 | **HBALS** | **426** | **427.85** | 1.68 | 4.62 |
-| eil51 | BA | 482 | 482.0 | 0.0 | 0.72 |
-| eil51 | ACO | 438 | 452.75 | 6.27 | 20.66 |
-| eil51 | PSO | 489 | 505.65 | 3.96 | 0.29 |
-| eil51 | GA | 674 | 770.65 | 45.8 | 0.34 |
-| kroA100 | **HBALS** | **21296** | **21388.6** | 79.05 | 39.17 |
-| kroA100 | ACO | 23240 | 23611.4 | 230.5 | 123.28 |
-| kroA100 | PSO | 25816 | 26117.15 | 69.08 | 0.5 |
-| kroA100 | BA | 26133 | 26133 | 0.0 | 0.83 |
-| kroA100 | GA | 71781 | 79111.4 | 3629.83 | 0.67 |
+1. **Population initialization**
+   A mixture of Nearest-Neighbor and random tours is used to balance initial solution quality and diversity.
 
-*(Full comparison table for all 6 datasets in [`results/csv/`](results/csv/).)*
+2. **Population evaluation**
+   Candidate tours are evaluated and ranked according to their total length.
 
-**Takeaways:**
-- HBALS beats BA, ACO, GA, and PSO on solution quality across all tested instances.
-- ACO gets closest to HBALS in quality but is 3-30x slower.
-- BA has zero variance (std=0) because it repeatedly converges to the *same* mediocre solution — not a sign of quality, just stagnation.
-- Time complexity: `O(T(n + m(nep+nsp)))` for HBALS vs `O(T·n²)` for ACO — HBALS is faster than ACO but slower than plain BA/PSO, which is the expected cost of the added local search.
+3. **Elite-site search**
+   Intensive 2-opt local search, with occasional 3-opt moves, is applied to the best candidate solutions.
 
-### Convergence
+4. **Selected-site search**
+   Lighter local search is applied to additional promising solutions.
 
-HBALS reaches near-optimal values within the first 50-80 iterations on every tested instance (see [`results/plots/`](results/plots/)):
+5. **Scout bees**
+   New candidate tours are introduced to maintain exploration and reduce premature convergence.
 
-![Convergence on eil51](results/plots/hbals_convergence_eil51.png)
+6. **Adaptive neighborhood**
+   The search radius is adjusted according to improvement or stagnation.
 
-## Algorithm
+7. **Termination**
+   The process continues until the maximum number of iterations is reached or the search stagnates for a specified number of generations.
 
-1. **Initialize population** — mix of Nearest-Neighbor-constructed tours and random tours (`nn_ratio` controls the split), balancing initial quality and diversity.
-2. **Evaluate & sort** — rank the population by tour length.
-3. **Elite site search** — apply intensive 2-opt (and occasional 3-opt) local search around the top `e` elite tours.
-4. **Selected site search** — apply lighter local search around the next `m` best tours.
-5. **Scout bees** — fill the rest of the population with fresh random tours to preserve exploration.
-6. **Adaptive neighborhood** — the search radius shrinks (`alpha`) after improvements and grows (`beta`) after stagnation.
-7. **Repeat** until max iterations or `no_improve_threshold` consecutive non-improving generations.
+---
 
-## Usage
+## 📊 Experimental Evaluation
+
+HBALS was evaluated on six standard **TSPLIB** benchmark instances.
+
+Each experiment used:
+
+* **20 independent runs**
+* **300 iterations**
+* `fast` configuration
+* Best, mean, standard deviation, and execution time recorded
+
+| Dataset    | Cities |  Best |     Mean | Std. Dev. | Time (s) |
+| ---------- | -----: | ----: | -------: | --------: | -------: |
+| `eil51`    |     51 |   426 |   427.85 |      1.68 |     4.62 |
+| `berlin52` |     52 |  7542 |  7543.00 |      2.00 |     5.31 |
+| `st70`     |     70 |   675 |   679.40 |      2.82 |    11.91 |
+| `kroA100`  |    100 | 21296 | 21388.60 |     79.06 |    39.17 |
+| `ch150`    |    150 |  6570 |  6627.95 |     40.13 |    83.68 |
+| `rat195`   |    195 |  2349 |  2375.30 |     14.16 |   161.51 |
+
+### Baseline Comparison
+
+The implementation includes four baseline algorithms:
+
+* **Bees Algorithm (BA)**
+* **Ant Colony Optimization (ACO)**
+* **Genetic Algorithm (GA)**
+* **Particle Swarm Optimization (PSO)**
+
+Across the six tested benchmark instances, HBALS obtained the lowest tour length among the implemented baselines in the recorded experiments. The complete comparison results are available in [`results/csv/`](results/csv/).
+
+---
+
+## 📈 Convergence
+
+Convergence curves are provided for HBALS and all baseline algorithms.
+
+See [`results/plots/`](results/plots/) for the complete set of generated plots.
+
+---
+
+## 🧠 Algorithm Components
+
+### Bees Algorithm
+
+The population-based search is organized around:
+
+* Elite sites
+* Selected sites
+* Recruited bees
+* Scout bees
+
+### Local Search
+
+HBALS incorporates:
+
+* **2-opt** for systematic route improvement
+* A lightweight **3-opt-inspired segment reversal operation**
+* Adaptive neighborhood control
+
+The local-search intensity is concentrated around promising solutions rather than applied uniformly to the entire population.
+
+---
+
+## 🧪 Reproducibility
+
+All six benchmark instances used in the experiments are included in the repository, so the experiments can be reproduced without downloading external datasets.
+
+### Installation
 
 ```bash
 pip install -r requirements.txt
-
-# Run HBALS
-python src/hbals.py --tsp-file data/eil51.tsp --preset fast --runs 20 --max-iter 300
-
-# Run any baseline the same way
-python src/baselines/ba.py  --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-python src/baselines/aco.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-python src/baselines/ga.py  --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-python src/baselines/pso.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
 ```
 
-All six TSPLIB instances used in the experiments are included in [`data/`](data/), so results are reproducible out of the box — no external downloads needed.
+### Run HBALS
 
-## Repo structure
-
+```bash
+python src/hbals.py \
+    --tsp-file data/eil51.tsp \
+    --preset fast \
+    --runs 20 \
+    --max-iter 300
 ```
+
+### Run the Baselines
+
+```bash
+python src/baselines/ba.py \
+    --tsp-file data/eil51.tsp \
+    --runs 20 \
+    --max-iter 300
+
+python src/baselines/aco.py \
+    --tsp-file data/eil51.tsp \
+    --runs 20 \
+    --max-iter 300
+
+python src/baselines/ga.py \
+    --tsp-file data/eil51.tsp \
+    --runs 20 \
+    --max-iter 300
+
+python src/baselines/pso.py \
+    --tsp-file data/eil51.tsp \
+    --runs 20 \
+    --max-iter 300
+```
+
+---
+
+## 📁 Repository Structure
+
+```text
 HBALS-TSP/
 ├── src/
-│   ├── hbals.py               # HBALS implementation (population, local search, solver, CLI)
+│   ├── hbals.py
 │   └── baselines/
-│       ├── ba.py               # Basic Bee Algorithm (no local search — isolates HBALS's contribution)
-│       ├── aco.py              # Ant Colony Optimization (Ant System)
-│       ├── ga.py                # Genetic Algorithm (OX crossover, swap mutation)
-│       └── pso.py               # Particle Swarm Optimization (adapted for permutation space)
-├── data/                        # TSPLIB instances (eil51, berlin52, st70, kroA100, ch150, rat195)
+│       ├── ba.py
+│       ├── aco.py
+│       ├── ga.py
+│       └── pso.py
+│
+├── data/
+│   ├── eil51.tsp
+│   ├── berlin52.tsp
+│   ├── st70.tsp
+│   ├── kroA100.tsp
+│   ├── ch150.tsp
+│   └── rat195.tsp
+│
 ├── results/
-│   ├── csv/                     # HBALS per-instance result summaries
-│   ├── plots/                   # HBALS convergence curves
+│   ├── csv/
+│   ├── plots/
 │   └── baselines/
-│       ├── csv/                 # BA / ACO / GA / PSO result summaries
-│       └── plots/                # BA / ACO / GA / PSO convergence curves
+│       ├── csv/
+│       └── plots/
+│
 ├── docs/
-│   └── HBALS_paper.docx        # Original write-up (algorithm derivation, related work, discussion)
-└── requirements.txt
+│   └── HBALS_paper.docx
+│
+├── requirements.txt
+├── LICENSE
+└── README.md
 ```
 
-## Limitations & future work
+---
 
-- The "3-opt" operator is a lightweight randomized segment-reversal search, not a full 3-opt neighborhood (which considers all 7 reconnection types) — noted for transparency, not hidden.
-- Performance is sensitive to parameter tuning (`n`, `m`, `e`, `nep`, `nsp`, `ngh`); no automated tuning was performed.
-- Tested up to 195 cities; scaling behavior on larger instances (500+) is untested.
-- Possible extensions: parallel/GPU local search, adaptive parameter self-tuning, hybridization with Lin-Kernighan moves.
+## ⚠️ Limitations
 
-## Author
+* The implemented 3-opt operation is a lightweight randomized segment-reversal search rather than a full 3-opt neighborhood.
+* Performance is sensitive to parameter settings; automated parameter optimization was not performed.
+* Experiments were conducted on instances up to 195 cities.
+* Scalability to substantially larger instances has not been evaluated.
 
-Erfan Khadiv — Computer Engineering, Islamic Azad University, Ardabil
+---
 
-Supervisor: Dr. Masoud Bakravi
- 
-## License
+## 🚀 Future Work
 
-MIT — see [LICENSE](LICENSE).
+Potential extensions include:
 
+* Automated parameter self-tuning
+* Parallel or GPU-accelerated local search
+* More extensive TSPLIB benchmarking
+* Full 3-opt neighborhood exploration
+* Hybridization with Lin-Kernighan search
+* Evaluation on larger TSP instances
+
+---
+
+## 📄 Project Documentation
+
+The original project paper is available in [`docs/`](docs/).
+
+The repository also contains the complete experimental results and generated plots.
+
+---
+
+## 🎓 Academic Information
+
+**Project:** HBALS — Hybrid Bees Algorithm with Adaptive Local Search  
+**Degree:** B.Sc. in Computer Engineering  
+**Course:** Computer Project  
+**University:** Islamic Azad University, Ardabil  
+**Year:** 2026  
+**Supervisor:** Dr. Masoud Bakravi  
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for details.
