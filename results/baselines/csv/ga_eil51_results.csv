@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+GeneticAlgorithm,../DATASETS/eil51.tsp,eil51,51,674.0,770.65,45.80968784001917,0.34432671070098875,20,300

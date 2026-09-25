@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+BasicBA,data/eil51.tsp,eil51,51,503.0,543.7,19.217439996003627,1.7673407793045044,20,300

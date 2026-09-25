@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+BasicBA,data/st70.tsp,st70,70,978.0,1084.05,58.104625461317625,1.8062633752822876,20,300

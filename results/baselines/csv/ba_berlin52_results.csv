@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+BasicBA,data/berlin52.tsp,berlin52,52,9592.0,9838.55,201.63146455848602,1.6978356480598449,20,300

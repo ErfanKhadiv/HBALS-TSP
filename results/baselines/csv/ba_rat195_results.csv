@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+BasicBA,data/rat195.tsp,rat195,195,7344.0,7843.5,221.4498814630525,2.5895514369010924,20,300

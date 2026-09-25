@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+AntColony,../DATASETS/berlin52.tsp,berlin52,52,7548.0,7684.45,57.5755807612915,21.971967136859895,20,300

@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+BasicBA,data/kroA100.tsp,kroA100,100,44975.0,48562.6,2445.014609363306,1.9227911472320556,20,300

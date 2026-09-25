@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+BasicBA,data/ch150.tsp,ch150,150,16817.0,18193.6,677.24799003024,2.517876958847046,20,300

@@ -1,0 +1,2 @@
+algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
+GeneticAlgorithm,../DATASETS/st70.tsp,st70,70,1570.0,1711.2,99.64818111736913,0.4743390202522278,20,300
