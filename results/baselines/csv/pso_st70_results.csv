@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-PSO,../DATASETS/st70.tsp,st70,70,765.0,810.9,10.765221781273251,0.3560387134552002,20,300

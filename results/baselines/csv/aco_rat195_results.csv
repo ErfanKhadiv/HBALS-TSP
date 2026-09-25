@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-AntColony,../DATASETS/rat195.tsp,rat195,195,2466.0,2552.95,42.50702883053577,767.8927230954171,20,300

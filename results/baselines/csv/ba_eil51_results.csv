@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-BasicBA,../DATASETS/eil51.tsp,eil51,51,482.0,482.0,0.0,0.7232110142707825,20,300

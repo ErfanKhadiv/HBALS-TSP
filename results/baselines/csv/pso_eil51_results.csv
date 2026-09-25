@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-PSO,../DATASETS/eil51.tsp,eil51,51,489.0,505.65,3.965791219920685,0.29739779233932495,20,300

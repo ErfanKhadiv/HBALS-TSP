@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-AntColony,../DATASETS/ch150.tsp,ch150,150,6758.0,6964.35,125.26502903843515,363.5472424507141,20,300

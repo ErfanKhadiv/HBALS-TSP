@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-PSO,../DATASETS/rat195.tsp,rat195,195,2742.0,2751.2,2.481934729198171,0.9364091396331787,20,300

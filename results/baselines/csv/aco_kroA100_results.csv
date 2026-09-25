@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-AntColony,../DATASETS/kroA100.tsp,kroA100,100,23240.0,23611.4,230.50084598543233,123.28366323709488,20,300

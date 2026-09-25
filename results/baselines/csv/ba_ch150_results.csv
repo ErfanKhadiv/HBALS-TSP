@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-BasicBA,../DATASETS/ch150.tsp,ch150,150,7157.0,7157.0,0.0,0.9547462582588195,20,300

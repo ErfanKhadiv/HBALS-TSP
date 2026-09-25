@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-GeneticAlgorithm,../DATASETS/kroA100.tsp,kroA100,100,71781.0,79111.4,3629.830166825991,0.6704702615737915,20,300

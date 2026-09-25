@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-GeneticAlgorithm,../DATASETS/ch150.tsp,ch150,150,27083.0,29230.7,901.6035215104253,1.2379144191741944,20,300

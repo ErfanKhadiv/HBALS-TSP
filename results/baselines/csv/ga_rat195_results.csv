@@ -1,2 +1,0 @@
-algorithm,instance,instance_name,n_nodes,best,mean,std,avg_time_s,runs,max_iter
-GeneticAlgorithm,../DATASETS/rat195.tsp,rat195,195,11063.0,12062.65,548.1720783659088,1.9579075217247008,20,300
