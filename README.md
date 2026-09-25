@@ -111,7 +111,7 @@ Hybrid Bees Algorithm with adaptive local search.
 
 ### BA
 
-Basic Bees Algorithm without the HBALS local-search component.
+Basic Bees Algorithm baseline without the HBALS-specific adaptive neighborhood control and local-search operators.
 
 ### ACO
 
