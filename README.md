@@ -243,8 +243,7 @@ The written report is available in [`docs/`](docs). It covers background, relate
 **Degree:** B.Sc. in Computer Engineering  
 **Course:** Computer Project  
 **University:** Islamic Azad University, Ardabil  
-**Year:** 2026  
-**Course supervisor:** Dr. Masoud Bakravi
+**Year:** 2026
 
 ---
 
@@ -255,6 +254,14 @@ If you use this implementation or build upon this project, please cite:
 > Khadiv, Erfan. (2026). *HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem*. GitHub. <https://github.com/ErfanKhadiv/HBALS-TSP>
 
 Citation metadata is also provided in [`CITATION.cff`](CITATION.cff).
+
+---
+
+## 🙏 Acknowledgments
+
+The author thanks Dr. Masoud Bakravi for serving as the supervisor of the Computer Project course at Islamic Azad University, Ardabil, under which this work was carried out.
+
+The author used ChatGPT (OpenAI) and Claude (Anthropic) for language editing and for feedback on the manuscript and repository documentation. The author reviewed and edited all content and takes full responsibility for the work.
 
 ---
 
