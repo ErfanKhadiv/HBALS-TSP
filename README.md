@@ -4,7 +4,7 @@ A hybrid metaheuristic that combines the **Bees Algorithm (BA)** with adaptive n
 
 The project investigates whether adaptive neighborhood control and local-search refinement can improve the solution quality and convergence of the Bees Algorithm while preserving the exploration capability of a population-based metaheuristic.
 
-> 🎓 **Bachelor's Final Project**, Computer Project course, Islamic Azad University, Ardabil (2026)
+> 🎓 **Bachelor's Final Project**, Computer Project course, Islamic Azad University, Ardabil. Under the supervision of **Dr. Masoud Bekravi** (2026)
 
 ---
 
