@@ -4,7 +4,7 @@ A hybrid metaheuristic that combines the **Bees Algorithm (BA)** with adaptive n
 
 The project investigates whether adaptive neighborhood control and local-search refinement can improve the solution quality and convergence of the Bees Algorithm while preserving the exploration capability of a population-based metaheuristic.
 
-> 🎓 **Bachelor's Final Project**, Computer Project course, Islamic Azad University, Ardabil. Under the supervision of **Dr. Masoud Bekravi** (2026)
+> 🎓 **Bachelor's Final Project**, Computer Architecture Project course, Islamic Azad University, Ardabil. Under the supervision of **Dr. Masoud Bekravi** (2026)
 
 ---
 
@@ -241,7 +241,7 @@ The written report is available in [`docs/`](docs). It covers background, relate
 
 **Project:** HBALS: Hybrid Bees Algorithm with Adaptive Local Search  
 **Degree:** B.Sc. in Computer Engineering  
-**Course:** Computer Project  
+**Course:** Computer Architecture Project  
 **University:** Islamic Azad University, Ardabil  
 **Year:** 2026
 
@@ -259,7 +259,7 @@ Citation metadata is also provided in [`CITATION.cff`](CITATION.cff).
 
 ## 🙏 Acknowledgments
 
-The author thanks Dr. Masoud Bakravi for serving as the supervisor of the Computer Project course at Islamic Azad University, Ardabil, under which this work was carried out.
+The author thanks Dr. Masoud Bekravi for serving as the supervisor of the Computer Project course at Islamic Azad University, Ardabil, under which this work was carried out.
 
 The author used ChatGPT (OpenAI) and Claude (Anthropic) for language editing and for feedback on the manuscript and repository documentation. The author reviewed and edited all content and takes full responsibility for the work.
 
