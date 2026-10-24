@@ -1,0 +1,6 @@
+eil51     port mean    427.35  first-manuscript mean    427.85  avg iterations  47.5
+berlin52  port mean   7543.20  first-manuscript mean   7543.00  avg iterations  45.5
+st70      port mean    677.90  first-manuscript mean    679.40  avg iterations  55.3
+kroA100   port mean  21408.10  first-manuscript mean  21388.60  avg iterations  77.5
+ch150     port mean   6614.40  first-manuscript mean   6627.95  avg iterations  74.9
+rat195    port mean   2380.75  first-manuscript mean   2375.30  avg iterations  68.0

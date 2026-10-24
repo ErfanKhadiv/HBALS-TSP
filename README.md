@@ -1,23 +1,27 @@
-# HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem
+# HBALS: Hybrid Bees Algorithm with 2-opt Local Search for the Travelling Salesman Problem
 
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)
-![Problem](https://img.shields.io/badge/Problem-Traveling%20Salesman-orange)
-![Benchmark](https://img.shields.io/badge/Benchmark-TSPLIB%20(6%20instances)-informational)
+![Problem](https://img.shields.io/badge/Problem-Travelling%20Salesman-orange)
+![Benchmark](https://img.shields.io/badge/Benchmark-TSPLIB%20(15%20instances%20in%20v2)-informational)
 ![Project](https://img.shields.io/badge/Bachelor's%20Final%20Project-2026-A51C30)
-[![Preprint DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23450862.svg)](https://doi.org/10.5281/zenodo.23450862)
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23450861.svg)](https://doi.org/10.5281/zenodo.23450861)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-HBALS is a hybrid metaheuristic that combines the **Bees Algorithm (BA)** with adaptive **2-opt / 3-opt local search** to solve the **Traveling Salesman Problem (TSP)**. The project asks whether adaptive local search can improve solution quality and convergence while keeping the exploration ability of a population-based method. It was my Bachelor's final project (*Computer Project* course, Islamic Azad University, Ardabil, 2026), supervised by Dr. Masoud Bakravi. This repository contains the HBALS implementation, four baseline algorithms (BA, ACO, GA, PSO), the six TSPLIB instances used in the experiments, the generated results and plots, and the written project report. A preprint of the paper is available on Zenodo: [10.5281/zenodo.23450862](https://doi.org/10.5281/zenodo.23450862).
+HBALS is a hybrid metaheuristic that combines the **Bees Algorithm (BA)** with **2-opt local search**, applied with different intensity at elite and selected sites, to solve the **Travelling Salesman Problem (TSP)**. It was my Bachelor's final project (*Computer Project* course, Islamic Azad University, Ardabil, 2026), supervised by Dr. Masoud Bekravi.
+
+> **Status (v2).** This repository contains two versions of the study.
+> **v1** is the original project (6 TSPLIB instances, iteration-based comparison).
+> **v2** (folder [`v2/`](v2/)) is a revised study with an equal-budget protocol, an ablation, stronger baselines, 15 instances and
+> non-parametric statistics. **The conclusions of v2 supersede those of v1.** v1 is kept unchanged for transparency, and
+> [Corrections to v1](#corrections-to-v1) lists exactly what was wrong or misleading in it.
 
 ## Contents
 
 - [Research question](#research-question)
-- [Motivation](#motivation)
-- [Method](#method)
-- [Experimental evaluation](#experimental-evaluation)
-- [Convergence](#convergence)
-- [Compared algorithms](#compared-algorithms)
-- [Concepts and skills covered](#concepts-and-skills-covered)
+- [Method (v2)](#method-v2)
+- [v2 evaluation](#v2-evaluation)
+- [Corrections to v1](#corrections-to-v1)
+- [v1 results (archived)](#v1-results-archived)
 - [Repository structure](#repository-structure)
 - [Setup and running](#setup-and-running)
 - [Limitations](#limitations)
@@ -29,29 +33,74 @@ HBALS is a hybrid metaheuristic that combines the **Bees Algorithm (BA)** with a
 
 ## Research question
 
-Can adaptive local search improve the solution quality and convergence behavior of the Bees Algorithm for the Traveling Salesman Problem while maintaining sufficient population diversity?
+The original question was whether adaptive local search improves the Bees Algorithm for the TSP. The revised study asks a broader and
+more careful question: **what does a Bees-style hybrid contribute once it is compared fairly**, with the same local search and the same
+computational budget for every method, and which of its components actually matter?
 
-## Motivation
-
-The TSP is a classic combinatorial optimization problem, and exact methods become harder to apply as the number of cities grows. Population-based metaheuristics are a practical alternative, but the standard Bees Algorithm can converge slowly or get trapped in local optima. HBALS applies local search **adaptively to the promising regions of the population**, combining global exploration with targeted local improvement.
-
-## Method
+## Method (v2)
 
 | Step | Stage | What it does |
 | --- | --- | --- |
-| 1 | Population initialization | Builds the initial population from a mixture of Nearest-Neighbor and random tours, balancing starting quality and diversity |
-| 2 | Evaluation and ranking | Scores each tour by total route length and ranks the population |
-| 3 | Elite-site search | Applies intensive 2-opt local search, with occasional 3-opt moves, to the best candidate solutions |
-| 4 | Selected-site search | Applies lighter local search to additional promising solutions |
-| 5 | Scout bees | Introduces new candidate tours to preserve exploration and reduce premature convergence |
-| 6 | Adaptive neighborhood | Adjusts the search neighborhood according to improvement or stagnation |
-| 7 | Termination | Stops at the maximum number of iterations, or when the search stagnates for a set number of generations |
+| 1 | Initialisation | Population of 20 tours: 10 Nearest-Neighbour tours (start cities 0-9) and 10 random tours |
+| 2 | Evaluation and ranking | Scores each tour by total length and ranks the population; the best 3 are elite sites and the best 12 are selected sites |
+| 3 | Elite-site search | 8 candidates per site: one random swap, then first-improvement 2-opt (at most 20 moves, probability 0.7) and, with probability 0.1, a random segment reversal |
+| 4 | Selected-site search | 4 candidates per site: one random swap, then 2-opt (at most 10 moves, probability 0.3) |
+| 5 | Scout bees | Random tours refill the population |
+| 6 | Termination | Fixed budget of move evaluations (the equivalent of 300 iterations); **no early stopping** |
 
-## Experimental evaluation
+There is **no adaptive neighbourhood** in the final method: the ablation showed that it hurts (see below).
 
-HBALS was evaluated on six standard TSPLIB benchmark instances. Each experiment used 20 independent runs of 300 iterations with the `fast` preset, and recorded the best solution, mean solution quality, standard deviation and execution time.
+## v2 evaluation
 
-### HBALS results
+**Protocol.** Every method gets the same budget of move evaluations on each instance and, where applicable, the same 2-opt operator.
+Methods: HBALS, iterated local search (ILS-2opt), a memetic GA (GA-2opt), a memetic ant system (ACO-2opt), multi-start 2-opt and a plain
+BA without local search. 20 runs per method on 12 instances (10 on three larger instances), seeds 1000 + run index. Statistics:
+Mann-Whitney, Wilcoxon signed-rank and Friedman tests with Holm correction (see [`v2/`](v2/) and the paper).
+
+### Mean gap to the best-known tour length (%), lower is better
+
+| Instance | Cities | HBALS best | HBALS | ILS-2opt | GA-2opt | ACO-2opt |
+| --- | --- | --- | --- | --- | --- | --- |
+| `eil51` | 51 | 426 | 0.035 | 0.200 | 0.317 | 0.739 |
+| `berlin52` | 52 | 7542 | 0.000 | 0.154 | 0.154 | 0.036 |
+| `st70` | 70 | 675 | 0.030 | 0.348 | 0.385 | 1.200 |
+| `eil76` | 76 | 538 | 0.158 | 0.316 | 0.641 | 1.980 |
+| `kroA100` | 100 | 21282 | 0.008 | 0.117 | 0.148 | 2.314 |
+| `kroB100` | 100 | 22141 | 0.237 | 0.351 | 0.301 | 1.769 |
+| `eil101` | 101 | 629 | 0.175 | 0.350 | 0.723 | 4.976 |
+| `lin105` | 105 | 14379 | 0.160 | 0.208 | 0.379 | 1.418 |
+| `ch130` | 130 | 6110 | 0.601 | 0.676 | 0.903 | 4.238 |
+| `ch150` | 150 | 6549 | 0.545 | 0.541 | 0.722 | 3.377 |
+| `rat195` | 195 | 2338 | 1.184 | 0.837 | 1.539 | 5.712 |
+| `d198` | 198 | 15801 | 0.461 | 0.324 | 0.554 | 6.163 |
+| `kroA200` (10 runs) | 200 | 29435 | 0.46 | 0.71 | 1.42 | 11.29 |
+| `a280` (10 runs) | 280 | 2614 | 2.58 | 0.66 | 1.79 | 20.40 |
+| `lin318` (10 runs) | 318 | 42748 | 2.60 | 1.72 | 2.61 | 13.21 |
+
+### Main findings
+
+- On the 12 main instances HBALS has the best average rank (1.25 of 6; ILS-2opt 1.96, GA-2opt 2.96, ACO-2opt 4.00, multi-start 2-opt 4.83, plain BA 6.00).
+- HBALS is better than GA-2opt, ACO-2opt, multi-start 2-opt and plain BA on all 12 instances (Wilcoxon signed-rank, Holm-adjusted p = 0.0024).
+- **HBALS is not significantly different from ILS-2opt** over the 12 instances (p = 0.13). HBALS is significantly better on `eil51` and `kroA100`;
+  **ILS-2opt is significantly better on the larger instances `a280` and `lin318`.** HBALS is therefore *not* claimed to be a new state-of-the-art solver.
+- Ablation (4 instances): 2-opt at the elite sites and a single-swap perturbation drive performance. The adaptive neighbourhood rule and a 3-swap perturbation
+  are clearly harmful. Segment reversal, selected-site 2-opt and scout bees showed no measurable effect.
+- Stopping a run after 20 non-improving iterations roughly tripled the average gap compared with using the full budget.
+- **Reproducibility:** the full study was run on Windows 11 and in a Linux container with different library versions; tour lengths, evaluation counts and
+  iteration counts were identical in all 2,240 runs (`v2/results/`, `v2/results_reference/`).
+
+## Corrections to v1
+
+The original (v1) project contained the following problems, found while preparing v2:
+
+1. **The adaptive neighbourhood was inactive.** Because of integer truncation the neighbourhood size fell from 3 to 1 within two iterations and could not grow again, so v1 results were obtained with a single random swap. The corrected adaptive rule is harmful (v2 ablation), and the method is no longer called adaptive.
+2. **The "3-opt" step was a random segment reversal**, a randomised 2-opt-type move, not a 3-opt move.
+3. **Runs did not use 300 iterations.** The early-stopping rule (20 stagnant iterations) ended runs after about 38-94 iterations on average. v1 therefore understated the quality that the algorithm reaches.
+4. **The baselines had no local search and a short, iteration-based budget**, so the v1 claim that HBALS had the lowest tour length on all six instances compared a method *with* 2-opt against methods *without* it. In v2, all methods share the same 2-opt and the same budget.
+
+## v1 results (archived)
+
+Kept as originally reported (6 instances, 20 runs, `fast` preset, early stopping as described above). Use the v2 results for conclusions.
 
 | Dataset | Cities | Best | Mean | Std. dev. | Time (s) |
 | --- | --- | --- | --- | --- | --- |
@@ -62,137 +111,88 @@ HBALS was evaluated on six standard TSPLIB benchmark instances. Each experiment 
 | `ch150` | 150 | 6570 | 6627.95 | 40.13 | 83.68 |
 | `rat195` | 195 | 2349 | 2375.30 | 14.16 | 161.51 |
 
-### Baseline comparison
-
-Four baseline algorithms are implemented: the Bees Algorithm (BA), Ant Colony Optimization (ACO), a Genetic Algorithm (GA) and Particle Swarm Optimization (PSO). In the experiments conducted for this project, **HBALS obtained the lowest tour length among the implemented baselines on all six tested instances**. The full comparison is in [`results/`](results).
-
-## Convergence
-
-The repository includes convergence plots for HBALS and all baselines in [`results/plots/`](results/plots). On the tested instances, HBALS reaches near-final solution quality relatively early in the optimization.
-
-## Compared algorithms
-
-| Algorithm | Description |
-| --- | --- |
-| **HBALS** | Hybrid Bees Algorithm with adaptive local search |
-| **BA** | Basic Bees Algorithm without the HBALS local-search component |
-| **ACO** | Ant Colony Optimization using an Ant System approach |
-| **GA** | Genetic Algorithm with ordered crossover and permutation-based mutation |
-| **PSO** | Particle Swarm Optimization adapted for permutation-based TSP solutions |
-
-The baselines give a direct comparison against different population-based and swarm-inspired approaches.
-
-## Concepts and skills covered
-
-- **Combinatorial optimization:** the Traveling Salesman Problem, tour construction, Nearest-Neighbor heuristic
-- **Local search:** 2-opt and (randomized) 3-opt moves, adaptive neighborhoods
-- **Metaheuristics:** Bees Algorithm, Ant Colony Optimization, Genetic Algorithm, Particle Swarm Optimization
-- **Experimental method:** TSPLIB benchmarks, repeated independent runs, best / mean / standard deviation / runtime reporting, convergence analysis
-- **Research practice:** reproducible experiments, documented limitations, project report, citation metadata
-- **Tools:** Python
+The v1 comparison with BA, ACO, GA and PSO is in [`results/`](results) (with the caveats above), and the v1 convergence plots are in [`results/plots/`](results/plots).
 
 ## Repository structure
 
 ```
 HBALS-TSP/
-├── src/
-│   ├── hbals.py            # HBALS
-│   └── baselines/
-│       ├── ba.py
-│       ├── aco.py
-│       ├── ga.py
-│       └── pso.py
-├── data/                   # the six TSPLIB instances
-│   ├── eil51.tsp
-│   ├── berlin52.tsp
-│   ├── st70.tsp
-│   ├── kroA100.tsp
-│   ├── ch150.tsp
-│   └── rat195.tsp
-├── results/
-│   ├── csv/                # HBALS results
-│   ├── plots/              # HBALS convergence curves
-│   └── baselines/
-│       ├── csv/
-│       └── plots/
+├── v2/                     # revised study (start here): see v2/HOW_TO_RUN.md
+│   ├── src/                # Numba implementations, runner, analysis, quick tests
+│   ├── data/               # TSPLIB instances (EUC_2D)
+│   ├── results/            # per-run results, anytime curves, tables, figures
+│   ├── results_reference/  # independent run (identical results)
+│   └── run_all.py
+├── src/                    # v1 (original): hbals.py and baselines/ (ba, aco, ga, pso)
+├── data/                   # v1: six TSPLIB instances
+├── results/                # v1 results and plots
 ├── docs/
-│   └── HBALS_paper.docx    # project report
+│   └── HBALS_paper.docx    # v1 project report (superseded, see Corrections to v1)
 ├── CITATION.cff
 ├── LICENSE
-├── requirements.txt
+├── requirements.txt        # v1
 └── README.md
 ```
 
 ## Setup and running
 
-All six benchmark instances are included, so the reported experiments can be reproduced without downloading any external dataset.
+### v2 (recommended)
+
+```
+cd v2
+pip install -r requirements.txt
+python src/quick_test.py --instance eil51
+python run_all.py --verify        # about 15-40 min: re-runs 4 instances and compares with the reference results
+```
+
+See [`v2/HOW_TO_RUN.md`](v2/HOW_TO_RUN.md) for testing your own instances and for the full study.
+
+### v1 (original code)
 
 ```
 pip install -r requirements.txt
+python src/hbals.py --tsp-file data/eil51.tsp --preset fast --runs 20 --max-iter 300
+python src/baselines/ba.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
 ```
 
-Run HBALS:
-
-```
-python src/hbals.py \
-    --tsp-file data/eil51.tsp \
-    --preset fast \
-    --runs 20 \
-    --max-iter 300
-```
-
-Run the baselines (the same arguments apply to each):
-
-```
-python src/baselines/ba.py  --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-python src/baselines/aco.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-python src/baselines/ga.py  --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-python src/baselines/pso.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
-```
-
-Replace `eil51.tsp` with any other file in `data/` to run a different instance.
+(`aco.py`, `ga.py` and `pso.py` take the same arguments; replace `eil51.tsp` with any other file in `data/`.)
 
 ## Limitations
 
-- The implemented **3-opt operator is a lightweight randomized segment-reversal search**, not a full 3-opt neighborhood.
-- Performance is sensitive to parameter settings, and automated parameter optimization was not performed.
-- The experiments cover instances up to **195 cities**; behavior on substantially larger instances has not been evaluated.
-- Runtime grows with local-search effort and problem size.
-
-These limitations are stated explicitly to distinguish the current implementation from possible future extensions.
+- Only Euclidean TSPLIB instances with at most 318 cities were evaluated; behaviour on clustered, asymmetric or much larger instances is unknown.
+- ILS-2opt is better than HBALS on the larger instances under this budget, and the ranking against ILS depends on the budget.
+- The 2-opt operator restarts its scan after every improving move and uses no neighbour lists; its move limits (20 and 10) were not tuned.
+- Parameters were not tuned for HBALS or the baselines; the ablation uses four instances and one change at a time.
+- Specialised solvers such as LKH are far more effective on these instances.
 
 ## Future work
 
-- Adaptive parameter self-tuning
-- More extensive TSPLIB benchmarking
-- Full 3-opt neighborhood exploration
-- Parallel or GPU-accelerated local search
-- Hybridization with stronger local-search methods such as Lin-Kernighan
+- A size-dependent move limit or a stronger local search (Or-opt, 3-opt with neighbour lists)
+- A localised, segment-based perturbation instead of more random swaps
+- A simplified HBALS without the components that showed no effect, tested on more instances and budgets
+- Other instance classes (clustered, asymmetric) and larger sizes
 
 ## Project report and preprint
 
-The written report for this Bachelor's final project is in [`docs/`](docs). It covers the project background, algorithm design, related work, methodology, experimental evaluation and discussion.
-
-The paper is also available as a preprint on Zenodo: **[https://doi.org/10.5281/zenodo.23450862](https://doi.org/10.5281/zenodo.23450862)**.
+- [`docs/HBALS_paper.docx`](docs) is the v1 project report. It is superseded by v2 (see [Corrections to v1](#corrections-to-v1)).
+- **Zenodo record (all versions):** [10.5281/zenodo.23450861](https://doi.org/10.5281/zenodo.23450861). This DOI always resolves to the latest version. Version 1.0 ([10.5281/zenodo.23450862](https://doi.org/10.5281/zenodo.23450862)) is the original project preprint (v1). The revised version corresponds to v2 and also contains the paper (with supplementary information) and an archive of the code, data and results in `v2/`.
 
 ## Academic information
 
 | | |
 | --- | --- |
-| **Project** | HBALS: Hybrid Bees Algorithm with Adaptive Local Search |
+| **Project** | HBALS: Hybrid Bees Algorithm with 2-opt Local Search |
 | **Degree** | B.Sc. in Computer Engineering |
-| **Course** | Computer Architecture Project |
+| **Course** | Computer Project |
 | **University** | Islamic Azad University, Ardabil |
 | **Year** | 2026 |
-| **Supervisor** | Dr. Masoud Bakravi |
+| **Supervisor** | Dr. Masoud Bekravi |
 
 ## Citation
 
 If you use this implementation or build on this project, please cite:
 
-> Khadiv, Erfan. (2026). *HBALS: Hybrid Bees Algorithm with Adaptive Local Search for the Traveling Salesman Problem*. GitHub. <https://github.com/ErfanKhadiv/HBALS-TSP>
-
-The preprint can be cited by its DOI: <https://doi.org/10.5281/zenodo.23450862>.
+> Khadiv, Erfan. (2026). *HBALS: Hybrid Bees Algorithm with 2-opt Local Search for the Travelling Salesman Problem* (v2). GitHub. <https://github.com/ErfanKhadiv/HBALS-TSP>
 
 Citation metadata is also provided in [`CITATION.cff`](CITATION.cff).
 
