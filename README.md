@@ -8,7 +8,7 @@
 [![Preprint DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23450861.svg)](https://doi.org/10.5281/zenodo.23450861)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-HBALS is a hybrid metaheuristic that combines the **Bees Algorithm (BA)** with **2-opt local search**, applied with different intensity at elite and selected sites, to solve the **Travelling Salesman Problem (TSP)**. It was my Bachelor's final project (*Computer Project* course, Islamic Azad University, Ardabil, 2026), supervised by Dr. Masoud Bekravi.
+HBALS is a hybrid metaheuristic that combines the **Bees Algorithm (BA)** with **2-opt local search**, applied with different intensity at elite and selected sites, to solve the **Travelling Salesman Problem (TSP)**. It was my Bachelor's final project (*Computer Architecture Project* course, Islamic Azad University, Ardabil, 2026), supervised by Dr. Masoud Bekravi.
 
 > **Status (v2).** This repository contains two versions of the study.
 > **v1** is the original project (6 TSPLIB instances, iteration-based comparison).
@@ -79,7 +79,7 @@ There is **no adaptive neighbourhood** in the final method: the ablation showed 
 **Protocol.** Every method gets the same budget of move evaluations on each instance and, where applicable, the same 2-opt operator.
 Methods: HBALS, iterated local search (ILS-2opt), a memetic GA (GA-2opt), a memetic ant system (ACO-2opt), multi-start 2-opt and a plain
 BA without local search. 20 runs per method on 12 instances (10 on three larger instances), seeds 1000 + run index. Statistics:
-Mann-Whitney, Wilcoxon signed-rank and Friedman tests with Holm correction (see [`v2/`](v2/) and the paper).
+Mann-Whitney, Wilcoxon signed-rank and Friedman tests with Holm correction (see [`v2/`](v2/) and the [v2 preprint](docs/HBALS_preprint_v2.pdf)).
 
 ### Mean gap to the best-known tour length (%), lower is better
 
@@ -157,7 +157,10 @@ HBALS-TSP/
 ├── data/                   # v1: six TSPLIB instances
 ├── results/                # v1 results and plots
 ├── docs/
-│   └── HBALS_paper.docx    # v1 project report (superseded, see Corrections to v1)
+│   ├── HBALS_preprint_v2.pdf                   # v2 preprint (current)
+│   ├── HBALS_supplementary_information_v2.pdf  # supplementary information for v2
+│   ├── HBALS_preprint_v1.pdf                   # v1 preprint (superseded)
+│   └── HBALS_paper.docx                        # v1 project report (superseded)
 ├── CITATION.cff
 ├── LICENSE
 ├── requirements.txt        # v1
@@ -204,9 +207,16 @@ python src/baselines/ba.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
 
 ## Project report and preprint
 
-- **Preprint on Zenodo (all versions): [10.5281/zenodo.23450861](https://doi.org/10.5281/zenodo.23450861).** This DOI always resolves to the latest version.
-  Specific versions: v2 (revised paper with supplementary information, matches `v2/`) [10.5281/zenodo.23621275](https://doi.org/10.5281/zenodo.23621275); v1.0 (original project preprint) [10.5281/zenodo.23450862](https://doi.org/10.5281/zenodo.23450862).
-- [`docs/HBALS_paper.docx`](docs) is the v1 project report. It is superseded by v2 (see [Corrections to v1](#corrections-to-v1)).
+**Preprint on Zenodo (all versions): [10.5281/zenodo.23450861](https://doi.org/10.5281/zenodo.23450861).** This DOI always resolves to the latest version.
+
+| File | Content | Zenodo DOI |
+| --- | --- | --- |
+| [`docs/HBALS_preprint_v2.pdf`](docs/HBALS_preprint_v2.pdf) | **v2 preprint (current)**, matches the code and results in `v2/` | [10.5281/zenodo.23621275](https://doi.org/10.5281/zenodo.23621275) |
+| [`docs/HBALS_supplementary_information_v2.pdf`](docs/HBALS_supplementary_information_v2.pdf) | Supplementary information for the v2 preprint | part of the v2 record |
+| [`docs/HBALS_preprint_v1.pdf`](docs/HBALS_preprint_v1.pdf) | v1 preprint (original project), superseded | [10.5281/zenodo.23450862](https://doi.org/10.5281/zenodo.23450862) |
+| [`docs/HBALS_paper.docx`](docs/HBALS_paper.docx) | v1 project report (Word source), superseded | none |
+
+The v1 documents are kept unchanged for transparency; see [Corrections to v1](#corrections-to-v1) for what was wrong or misleading in them.
 
 ## Academic information
 
