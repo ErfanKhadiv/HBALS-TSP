@@ -32,7 +32,7 @@ This folder supersedes the v1 study in the repository root (see "Corrections to 
 ## Main results
 
 See the [root README](../README.md#results-at-a-glance). Short version: HBALS has the best average rank (1.25 of 6) on the 12 main instances,
-is not significantly different from ILS-2opt overall, and ILS-2opt is better from about 195 cities upward.
+is not significantly different from ILS-2opt overall, and ILS-2opt is better on the larger instances (a280, lin318).
 
 Figures are in [`results/figures/`](results/figures/), tables in [`results/tables/`](results/tables/).
 
