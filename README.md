@@ -46,7 +46,7 @@ Under an equal-budget comparison (same 2-opt operator, same number of move evalu
 | HBALS has the **best average rank (1.25 of 6)** and the lowest mean gap (0.30 %) on 12 instances with 51-198 cities | Friedman test, p = 1.3e-10 |
 | HBALS is significantly better than GA-2opt, ACO-2opt, multi-start 2-opt and plain BA | Wilcoxon signed-rank, Holm-adjusted p = 0.0024, better on all 12 instances |
 | HBALS is **not** significantly different from iterated local search (ILS-2opt) overall | Holm-adjusted p = 0.13; HBALS better on 9 instances, ILS better on 3 |
-| **ILS-2opt is better from about 195 cities upward** | significant on rat195, d198, a280 and lin318 (details below) |
+| **ILS-2opt is better on the larger instances** | significant on a280 and lin318 (10 runs); lower mean but not significant on rat195 and d198 |
 | Elite-site 2-opt and a single-swap perturbation matter; segment reversal, selected-site 2-opt and scouts show no measurable effect | ablation, 4 instances x 20 runs |
 
 HBALS is therefore a competitive memetic method on small and medium instances. It is **not** claimed to be a new state-of-the-art solver.
@@ -107,10 +107,10 @@ Multi-start 2-opt and the plain BA are in [`v2/results/tables/`](v2/results/tabl
 
 - On the 12 main instances HBALS has the best average rank (1.25 of 6; ILS-2opt 1.96, GA-2opt 2.96, ACO-2opt 4.00, multi-start 2-opt 4.83, plain BA 6.00). The rank difference to ILS-2opt is below the Nemenyi critical difference (2.18).
 - HBALS is better than GA-2opt, ACO-2opt, multi-start 2-opt and plain BA on all 12 instances (Wilcoxon signed-rank, Holm-adjusted p = 0.0024).
-- **HBALS is not significantly different from ILS-2opt** over the 12 instances (p = 0.13). Per instance (Mann-Whitney U on the 20 runs, Holm-adjusted):
-  HBALS is significantly better on `eil51` (p = 0.001) and `kroA100` (p = 0.0007), and **ILS-2opt is significantly better on `rat195` (p = 0.011) and `d198` (p = 0.030)**.
-  On the larger instances `a280` and `lin318` (10 runs) ILS-2opt is also better (unadjusted p = 0.0007 and 0.0017), while `kroA200` shows no significant difference (p = 0.38).
-  In short, **ILS-2opt is better from about 195 cities upward** under this budget. HBALS is therefore *not* claimed to be a new state-of-the-art solver.
+- **HBALS is not significantly different from ILS-2opt** over the 12 instances (p = 0.13). Per instance (Mann-Whitney U on the 20 runs, Holm-adjusted over the 12 instances):
+  HBALS is significantly better on `eil51` (p = 0.011) and `kroA100` (p = 0.004). ILS-2opt has the lower mean on `rat195` (p = 0.055) and `d198` (p = 0.134), but these differences are not significant.
+  On the larger instances (10 runs, Holm-adjusted over the three) ILS-2opt is better on `a280` and `lin318` (p = 0.0022 and 0.0034), while `kroA200` shows no significant difference (p = 0.38).
+  Under this budget HBALS therefore does not scale as well as ILS-2opt, and it is *not* claimed to be a new state-of-the-art solver.
 - Ablation (4 instances): 2-opt at the elite sites and a single-swap perturbation drive performance. The adaptive neighbourhood rule and a 3-swap perturbation
   are clearly harmful. Segment reversal, selected-site 2-opt and scout bees showed no measurable effect.
 - Stopping a run after 20 non-improving iterations roughly tripled the average gap compared with using the full budget (0.95 % versus 0.30 %).
@@ -193,7 +193,7 @@ python src/baselines/ba.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
 ## Limitations
 
 - Only Euclidean TSPLIB instances with at most 318 cities were evaluated; behaviour on clustered, asymmetric or much larger instances is unknown.
-- ILS-2opt is better than HBALS from about 195 cities upward under this budget, and the ranking against ILS depends on the budget.
+- ILS-2opt is better than HBALS on the larger instances (a280, lin318) under this budget, and the ranking against ILS depends on the budget.
 - The 2-opt operator restarts its scan after every improving move and uses no neighbour lists; its move limits (20 and 10) were not tuned.
 - Parameters were not tuned for HBALS or the baselines; the ablation uses four instances and one change at a time.
 - Specialised solvers such as LKH are far more effective on these instances.
