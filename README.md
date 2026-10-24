@@ -214,7 +214,7 @@ python src/baselines/ba.py --tsp-file data/eil51.tsp --runs 20 --max-iter 300
 | --- | --- |
 | **Project** | HBALS: Hybrid Bees Algorithm with 2-opt Local Search |
 | **Degree** | B.Sc. in Computer Engineering |
-| **Course** | Computer Project |
+| **Course** | Computer Architecture Project |
 | **University** | Islamic Azad University, Ardabil |
 | **Year** | 2026 |
 | **Supervisor** | Dr. Masoud Bekravi |
@@ -242,7 +242,7 @@ Citation metadata is also provided in [`CITATION.cff`](CITATION.cff) (GitHub's "
 
 ## Acknowledgments
 
-- Dr. Masoud Bekravi supervised the *Computer Project* course under which this work was carried out.
+- Dr. Masoud Bekravi supervised the *Computer Architecture Project* course under which this work was carried out.
 - Problem instances come from TSPLIB (Reinelt, 1991). The Bees Algorithm was introduced by Pham et al. (2005).
 - AI assistance: ChatGPT (OpenAI) and Claude (Anthropic) were used for language editing and for feedback on the manuscript and repository documentation. The independent Linux re-run in `v2/results_reference/` was produced in an AI assistant's code-execution environment, and the author's own full re-run on Windows 11 is in `v2/results/`. The author reviewed all content and takes full responsibility for the work.
 
