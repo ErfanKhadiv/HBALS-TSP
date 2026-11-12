@@ -117,3 +117,283 @@ body{font-size:16.5px;line-height:1.78}
 .bibtex{display:block;width:100%;min-width:0;max-width:100%;box-sizing:border-box;overflow-x:auto;white-space:pre}
 .publication-body .status-disclaimer{max-width:100%;box-sizing:border-box;border-top:1px solid var(--line);padding-top:14px;margin:16px 0 0;overflow-wrap:anywhere}
 @media(max-width:520px){.publication-card{grid-template-columns:minmax(0,1fr)}.publication-body h2{font-size:clamp(19px,6vw,24px);line-height:1.42}.publication-actions .button{max-width:100%;white-space:normal;text-align:center}.publication-actions #citation-status{flex-basis:100%}}
+
+
+/* Mobile navigation + RTL overflow hardening (2026-11-12) */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Grid/flex descendants must be allowed to shrink instead of widening the page. */
+#main,
+.site-header,
+.site-footer,
+.section-shell,
+.section-block,
+.hero-copy,
+.hero-visual,
+.overview-grid > *,
+.problem-grid > *,
+.analysis-grid > *,
+.figure-grid-two > *,
+.ablation-layout > *,
+.repro-grid > *,
+.repo-tree > *,
+.publication-card > *,
+.publication-body,
+.footer-top > *,
+.footer-bottom > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+img, svg, canvas, video {
+  max-width: 100%;
+}
+
+/* Long Persian phrases and mixed Persian/Latin strings should wrap inside cards. */
+.section-shell :is(p, h1, h2, h3, li, dd, dt, a, strong, small),
+.site-footer :is(p, a, span, small) {
+  overflow-wrap: anywhere;
+}
+
+.header-inner {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 1000px) {
+  .header-inner {
+    min-height: 68px;
+    gap: 10px;
+    padding-inline: 16px;
+  }
+
+  .brand {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  .brand strong {
+    font-size: 16px;
+  }
+
+  .brand small {
+    font-size: 9px;
+    letter-spacing: .11em;
+  }
+
+  .main-nav,
+  .main-nav.open {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    inset-inline: 10px;
+    width: auto;
+    max-width: calc(100vw - 20px);
+    max-height: min(68svh, 520px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 2px;
+    margin: 0;
+    padding: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 18px 48px #0005;
+    z-index: 45;
+    direction: inherit;
+  }
+
+  .main-nav.open {
+    display: flex;
+  }
+
+  .main-nav a {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 12px 13px;
+    border-radius: 8px;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+    text-align: start;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .main-nav a:hover,
+  .main-nav a.active {
+    background: var(--surface-2);
+  }
+
+  .main-nav a.active::after {
+    display: none;
+  }
+
+  .header-link {
+    display: none;
+  }
+
+  .header-tools {
+    flex: 0 0 auto;
+    gap: 7px;
+    margin-inline-start: auto;
+  }
+
+  .tool-button,
+  .menu-toggle {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border-radius: 10px;
+  }
+
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    font-size: 20px;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .header-inner {
+    min-height: 64px;
+    padding-inline: 12px;
+    gap: 8px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .brand-mark svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .brand strong {
+    font-size: 15px;
+  }
+
+  .brand small {
+    font-size: 8px;
+    letter-spacing: .08em;
+  }
+
+  .header-tools {
+    gap: 5px;
+  }
+
+  .tool-button,
+  .menu-toggle {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .main-nav,
+  .main-nav.open {
+    inset-inline: 6px;
+    max-width: calc(100vw - 12px);
+    padding: 8px;
+  }
+
+  .main-nav a {
+    padding: 12px 11px;
+    font-size: 14px;
+  }
+
+  .hero-subtitle,
+  .hero-text,
+  .publication-body,
+  .citation-line,
+  .status-disclaimer {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-actions .button,
+  .publication-actions .button {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .repo-tree div {
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .repo-tree code,
+  .repo-tree span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .publication-card,
+  .publication-body,
+  .publication-actions,
+  .bibtex {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* RTL-specific guardrails: keep intentional LTR charts/code contained. */
+html[dir="rtl"] body,
+html[dir="rtl"] #main,
+html[dir="rtl"] .section-shell,
+html[dir="rtl"] .publication-card,
+html[dir="rtl"] .publication-body,
+html[dir="rtl"] .footer-top,
+html[dir="rtl"] .footer-bottom {
+  min-width: 0;
+  max-width: 100%;
+}
+
+html[dir="rtl"] .table-wrap,
+html[dir="rtl"] .bibtex,
+html[dir="rtl"] .repro-card pre {
+  direction: ltr;
+  text-align: left;
+  max-width: 100%;
+}
+
+html[dir="rtl"] .section-heading,
+html[dir="rtl"] .section-subhead,
+html[dir="rtl"] .table-heading {
+  min-width: 0;
+}
+
+html[dir="rtl"] .footer-links,
+html[dir="rtl"] .publication-actions,
+html[dir="rtl"] .hero-actions,
+html[dir="rtl"] .hero-badges {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+}

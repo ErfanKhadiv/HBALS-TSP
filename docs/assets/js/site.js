@@ -68,6 +68,13 @@
       button.textContent = next === 'fa' ? 'EN' : 'FA';
       button.setAttribute('aria-label', next === 'fa' ? 'Switch to English' : 'تغییر زبان به فارسی');
     }
+    const menuButton = $('#menu-toggle');
+    if (menuButton) {
+      const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-label', next === 'fa'
+        ? (isOpen ? 'بستن منو' : 'بازکردن منو')
+        : (isOpen ? 'Close menu' : 'Open menu'));
+    }
     if (persist) {
       try { localStorage.setItem('hbals-lang', next); } catch (_) {}
     }
@@ -98,15 +105,29 @@
   function setupNavigation() {
     const menu = $('#menu-toggle');
     const nav = $('#main-nav');
+    const header = $('.site-header');
+    const setMenuOpen = (open) => {
+      if (!menu || !nav) return;
+      nav.classList.toggle('open', open);
+      menu.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-label', open ? (root.lang === 'fa' ? 'بستن منو' : 'Close menu') : (root.lang === 'fa' ? 'بازکردن منو' : 'Open menu'));
+      menu.textContent = open ? '×' : '☰';
+    };
     if (menu && nav) {
-      menu.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        menu.setAttribute('aria-expanded', String(open));
-        menu.textContent = open ? '×' : '☰';
+      menu.addEventListener('click', () => setMenuOpen(!nav.classList.contains('open')));
+      $$('a', nav).forEach(link => link.addEventListener('click', () => setMenuOpen(false)));
+      document.addEventListener('pointerdown', event => {
+        if (nav.classList.contains('open') && header && !header.contains(event.target)) setMenuOpen(false);
       });
-      $$('a', nav).forEach(link => link.addEventListener('click', () => {
-        nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.textContent = '☰';
-      }));
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && nav.classList.contains('open')) {
+          setMenuOpen(false);
+          menu.focus();
+        }
+      });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1000) setMenuOpen(false);
+      }, { passive: true });
     }
     const sections = $$('main section[id]');
     if ('IntersectionObserver' in window) {
