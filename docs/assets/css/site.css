@@ -23,7 +23,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,canvas:focus-visible{o
 .brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;flex-shrink:0}.brand:hover{text-decoration:none}.brand-mark{width:38px;height:38px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;background:var(--surface)}.brand-mark svg{width:28px;height:28px;fill:none;stroke:var(--accent);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.brand strong{display:block;font:800 17px/1 var(--display);letter-spacing:.08em}.brand small{display:block;margin-top:5px;color:var(--muted);font:500 9px/1 var(--mono);letter-spacing:.16em}
 .main-nav{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,25px);margin-inline:auto}.main-nav a{font-size:12px;font-weight:600;letter-spacing:.015em;color:var(--muted);white-space:nowrap}.main-nav a:hover,.main-nav a.active{color:var(--ink);text-decoration:none}.main-nav a.active:after{content:"";display:block;height:2px;margin-top:6px;background:var(--accent);border-radius:2px}
 .header-tools{display:flex;align-items:center;gap:8px;flex-shrink:0}.header-link{font:600 12px var(--mono);color:var(--ink);padding:9px 11px;border:1px solid var(--line);border-radius:9px}.header-link span{color:var(--accent)}.tool-button,.menu-toggle{height:36px;min-width:36px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);cursor:pointer;font:600 11px var(--mono)}.tool-button:hover,.menu-toggle:hover{border-color:var(--accent)}.menu-toggle{display:none;font-size:18px}
-.section-shell{max-width:1160px;margin-inline:auto;padding-inline:clamp(18px,4vw,42px)}
+.section-shell{width:100%;max-width:1200px;margin-inline:auto;padding-inline:clamp(20px,5vw,64px)}
 .hero{min-height:615px;display:grid;grid-template-columns:1.03fr .97fr;align-items:center;gap:clamp(34px,6vw,80px);padding-top:74px;padding-bottom:76px;position:relative}.hero:after{content:"";position:absolute;width:460px;height:460px;left:-260px;top:100px;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 9%,transparent),transparent 68%);pointer-events:none;z-index:-1}
 .eyebrow,.section-index,.card-kicker{font:500 10px/1.4 var(--mono);letter-spacing:.15em;color:var(--accent)}.eyebrow{display:flex;align-items:center;gap:10px}.eyebrow-line{display:block;width:28px;height:1px;background:var(--accent)}
 .hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}.pill{padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:500 10px var(--mono);letter-spacing:.02em}.pill-accent{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 9%,transparent)}
@@ -130,7 +130,6 @@ html, body {
 #main,
 .site-header,
 .site-footer,
-.section-shell,
 .section-block,
 .hero-copy,
 .hero-visual,
@@ -366,7 +365,6 @@ img, svg, canvas, video {
 /* RTL-specific guardrails: keep intentional LTR charts/code contained. */
 html[dir="rtl"] body,
 html[dir="rtl"] #main,
-html[dir="rtl"] .section-shell,
 html[dir="rtl"] .publication-card,
 html[dir="rtl"] .publication-body,
 html[dir="rtl"] .footer-top,
@@ -396,4 +394,27 @@ html[dir="rtl"] .hero-badges {
   min-width: 0;
   max-width: 100%;
   flex-wrap: wrap;
+}
+
+
+/* Content framing: preserve a centred reading column with consistent side gutters.
+   Keep this after the mobile/RTL safeguards so they cannot stretch sections to viewport width. */
+.section-shell {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 64px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 720px) {
+  .section-shell {
+    padding-inline: clamp(18px, 5.2vw, 26px);
+  }
+}
+
+@media (max-width: 380px) {
+  .section-shell {
+    padding-inline: 16px;
+  }
 }
