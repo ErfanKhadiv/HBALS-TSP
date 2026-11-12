@@ -6,9 +6,36 @@
 ![Benchmark](https://img.shields.io/badge/Benchmark-TSPLIB%20(15%20instances%20in%20v2)-informational)
 ![Project](https://img.shields.io/badge/Bachelor's%20Final%20Project-2026-A51C30)
 [![Preprint DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23450861.svg)](https://doi.org/10.5281/zenodo.23450861)
+[![Project Website](https://img.shields.io/badge/Website-Official%20Project%20Site-orange?logo=googlechrome&logoColor=white)](https://erfankhadiv.github.io/HBALS-TSP/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Try%20HBALS%20Online-success?logo=github)](https://erfankhadiv.github.io/HBALS-TSP/)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 HBALS is a hybrid metaheuristic that combines the **Bees Algorithm (BA)** with **2-opt local search**, applied with different intensity at elite and selected sites, to solve the **Travelling Salesman Problem (TSP)**. It was my Bachelor's final project (*Computer Architecture Project* course, Islamic Azad University, Ardabil, 2026), supervised by Dr. Masoud Bekravi.
+
+## 🌐 Project Website & Live Demo
+
+Explore the official HBALS project website:
+
+### [HBALS — Official Research Website](https://erfankhadiv.github.io/HBALS-TSP/)
+
+The website provides a dedicated space to explore the research, understand the algorithm, 
+and interact with its implementation.
+
+**What's available on the website?**
+
+- **Research Overview:** Project background, objectives, and key findings.
+- **Algorithm Design:** A detailed explanation of the Hybrid Bees Algorithm and its 2-opt integration.
+- **Experimental Results:** Benchmark comparisons, convergence curves, and performance analysis.
+- **Ablation Study:** An examination of the contribution of individual algorithm components.
+- **Statistical Analysis:** Statistical tests and significance comparisons.
+- **Interactive Live Demo:** Run and explore HBALS directly in your browser.
+- **Reproducibility:** Access to the source code, benchmark instances, experimental data, and research materials.
+
+> The browser-based demo is intended for interactive exploration. 
+> For the full experimental protocol and reproducible results, refer to the 
+> source code and experiment files in this repository.
+
+**[Visit the Official Website →](https://erfankhadiv.github.io/HBALS-TSP/)**
 
 > **Status (v2).** This repository contains two versions of the study.
 > **v1** is the original project (6 TSPLIB instances, iteration-based comparison).
