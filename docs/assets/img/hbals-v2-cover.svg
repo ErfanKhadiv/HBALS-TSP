@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+<title id="title">HBALS v2 research visual</title><desc id="desc">An abstract travelling-salesperson route with connected cities, search-site markers and subtle bee-inspired hexagonal geometry.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset=".55" stop-color="#101d32"/><stop offset="1" stop-color="#08111f"/></linearGradient>
+ <linearGradient id="route" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4d39b"/><stop offset=".54" stop-color="#d9a95f"/><stop offset="1" stop-color="#75c8bf"/></linearGradient>
+ <radialGradient id="aura"><stop stop-color="#d9a95f" stop-opacity=".22"/><stop offset="1" stop-color="#d9a95f" stop-opacity="0"/></radialGradient>
+ <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#8ca2be" stroke-opacity=".10" stroke-width="1"/></pattern>
+ <pattern id="hex" width="52" height="46" patternUnits="userSpaceOnUse"><path d="M13 1 26 8.5V23.5L13 31 0 23.5V8.5Z M39 24 52 31.5V46.5L39 54 26 46.5V31.5Z" fill="none" stroke="#d9a95f" stroke-opacity=".10" stroke-width="1.2"/></pattern>
+</defs>
+<rect width="1200" height="680" rx="28" fill="url(#bg)"/><rect width="1200" height="680" rx="28" fill="url(#grid)"/>
+<circle cx="740" cy="326" r="410" fill="url(#aura)"/>
+<path d="M-30 510C170 390 235 558 430 455S720 255 900 365s240 18 360-70M-20 570C190 450 282 620 470 520s265-195 440-95 220 28 330-28" fill="none" stroke="#6f91b5" stroke-opacity=".14" stroke-width="2"/>
+<path d="M-20 150C160 58 280 180 440 102s260-75 390 3 250 25 405-65" fill="none" stroke="#6f91b5" stroke-opacity=".12" stroke-width="2"/>
+<g opacity=".75" fill="none" stroke="#d9a95f" stroke-opacity=".18" stroke-width="1.2"><path d="M860 84 886 99V129L860 144 834 129V99Z M912 114 938 129V159L912 174 886 159V129Z M964 84 990 99V129L964 144 938 129V99Z M1016 114 1042 129V159L1016 174 990 159V129Z M1068 84 1094 99V129L1068 144 1042 129V99Z"/></g>
+<g fill="none" stroke="#d9a95f" stroke-opacity=".22" stroke-width="1.5"><circle cx="750" cy="330" r="250"/><circle cx="750" cy="330" r="292" stroke-dasharray="3 11"/><circle cx="750" cy="330" r="335" stroke-dasharray="1 13"/></g>
+<!-- faint candidate paths -->
+<g fill="none" stroke="#78a9c9" stroke-width="2" stroke-dasharray="5 10" opacity=".24"><path d="M136 412 230 210 392 152 566 226 740 144 922 220 1040 420 890 520 690 484 488 560 300 490Z"/><path d="M136 412 300 490 392 152 566 226 488 560 740 144 890 520 922 220 1040 420"/></g>
+<!-- best-so-far illustrative tour -->
+<path d="M136 412 230 210 392 152 566 226 740 144 922 220 1040 420 890 520 690 484 488 560 300 490 136 412" fill="none" stroke="#d9a95f" stroke-opacity=".23" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+<path d="M136 412 230 210 392 152 566 226 740 144 922 220 1040 420 890 520 690 484 488 560 300 490 136 412" fill="none" stroke="url(#route)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M136 412 230 210 392 152 566 226 740 144 922 220 1040 420 890 520 690 484 488 560 300 490 136 412" fill="none" stroke="#fff4da" stroke-opacity=".65" stroke-width="1.3" stroke-dasharray="2 12" stroke-linecap="round"/>
+<!-- cities -->
+<g fill="#0e1b2d" stroke="#8acbc2" stroke-width="3"><circle cx="136" cy="412" r="9"/><circle cx="230" cy="210" r="9"/><circle cx="392" cy="152" r="9"/><circle cx="566" cy="226" r="9"/><circle cx="740" cy="144" r="9"/><circle cx="922" cy="220" r="9"/><circle cx="1040" cy="420" r="9"/><circle cx="890" cy="520" r="9"/><circle cx="690" cy="484" r="9"/><circle cx="488" cy="560" r="9"/><circle cx="300" cy="490" r="9"/></g>
+<!-- search / elite markers -->
+<g fill="#f4d39b" stroke="#101b2c" stroke-width="5" filter="url(#glow)"><circle cx="392" cy="152" r="14"/><circle cx="740" cy="144" r="14"/><circle cx="890" cy="520" r="14"/></g>
+<g fill="none" stroke="#f4d39b" stroke-opacity=".65" stroke-width="1.5"><circle cx="392" cy="152" r="24"/><circle cx="740" cy="144" r="24"/><circle cx="890" cy="520" r="24"/></g>
+<!-- tiny bee-inspired marker -->
+<g transform="translate(105 102) rotate(-18)" stroke="#e6bd7d" stroke-width="3" fill="none" stroke-linecap="round"><ellipse cx="24" cy="22" rx="16" ry="10" fill="#d9a95f" fill-opacity=".3"/><path d="M16 15 21 29M25 13 30 30M8 18C-4 2 7 -5 17 13M31 13C42 -3 53 3 39 20M8 24 0 31M39 24 48 31"/><circle cx="43" cy="18" r="3" fill="#e6bd7d"/></g>
+<g fill="#c5d1e1" font-family="ui-monospace,monospace" font-size="17" letter-spacing="2" opacity=".8"><text x="92" y="626">SEARCH SPACE</text><text x="1108" y="626" text-anchor="end">ILLUSTRATIVE TOUR</text></g>
+<path d="M92 590H1108" stroke="#8da2bd" stroke-opacity=".24"/>
+</svg>
